@@ -1,0 +1,32 @@
+.root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  background-image: url("@/assets/images/login_bg.jpg");
+  background-size: cover;
+
+  .login-form-content {
+    width: 420px;
+    padding: 35px 30px 20px;
+    border-radius: 12px;
+    box-shadow: 2px 3px 7px rgb(0 0 0 / 20%) !important;
+    background-color: rgba($color: #fff, $alpha: 0.7);
+    .login-forms {
+      margin-top: 28px;
+
+      .login-remember {
+        margin-bottom: 12px;
+      }
+
+      .login-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  }
+}
