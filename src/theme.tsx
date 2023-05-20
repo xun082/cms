@@ -3,14 +3,11 @@ import { ConfigProvider, theme } from "antd";
 import { StyleProvider } from "@ant-design/cssinjs";
 import App from "./App";
 import { ThemeContextType, useProThemeContext } from "./hooks/theme";
-import themeToken from "./utils/theme-constant";
+import { BackGroundColor, FontColor } from "./enum/theme";
+import { getThemeColor } from "./utils";
 
 const ThemeContext = () => {
   const { Theme } = useProThemeContext() as ThemeContextType;
-
-  function getThemeColor(left: string, right: string): string {
-    return Theme === "light" ? left : right;
-  }
 
   return (
     <StyleProvider hashPriority="high">
@@ -22,12 +19,14 @@ const ThemeContext = () => {
               : [theme.darkAlgorithm, theme.compactAlgorithm],
           token: {
             colorFillContentHover: getThemeColor(
-              themeToken.lightTheme,
-              themeToken.darkTheme,
+              Theme,
+              BackGroundColor.light,
+              BackGroundColor.dark,
             ),
             colorTextHeading: getThemeColor(
-              themeToken.colorTextDisabledLight,
-              themeToken.colorTextDisabledDark,
+              Theme,
+              FontColor.light,
+              FontColor.dark,
             ),
           },
         }}

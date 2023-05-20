@@ -13,12 +13,13 @@ import {
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import { setThemeInfo } from "@/utils/storage";
-import themeToken from "@/utils/theme-constant";
 import screenfull from "screenfull";
 import { useAppDispatch } from "@/store";
 import { CollapsedAction } from "@/store/modules/home";
 import { useAppSelector } from "@/store";
 import avatar from "@/assets/images/avatar.png";
+import { getThemeColor } from "@/utils";
+import { BackGroundColor } from "@/enum/theme";
 
 const LayoutHeader: FC = () => {
   const { isCollapsed } = useAppSelector(state => state.home);
@@ -77,8 +78,11 @@ const LayoutHeader: FC = () => {
     <Layout.Header
       className={styles.root}
       style={{
-        background:
-          Theme === "light" ? themeToken.lightTheme : themeToken.darkTheme,
+        background: getThemeColor(
+          Theme,
+          BackGroundColor.light,
+          BackGroundColor.dark,
+        ),
       }}
     >
       <div className={styles["left"]}>

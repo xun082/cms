@@ -14,6 +14,7 @@ export const loginAction = createAsyncThunk(
   "login/token",
   async (data: requestFrom) => {
     const res = await login(data);
+    console.log("🚀 ~ file: login.ts:17 ~ res:", res)
     return res;
   },
 );
@@ -26,7 +27,6 @@ const loginSlice = createSlice({
     builder // 登录实例
       .addCase(loginAction.fulfilled, (state, action) => {
         const { payload } = action;
-        console.log(payload.access_token);
 
         state.access_token = payload.access_token;
         state.refresh_token = payload.refresh_token;

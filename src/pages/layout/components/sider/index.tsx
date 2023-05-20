@@ -5,9 +5,10 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useProThemeContext } from "@/hooks/theme";
-import type { MenuProps, MenuTheme } from "antd";
-import themeToken from "@/utils/theme-constant";
+import type { MenuProps } from "antd";
 import { Menu } from "antd";
+import { getThemeColor } from "@/utils";
+import { BackGroundColor, FontColor } from "@/enum/theme";
 import "./index.scss";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -39,14 +40,13 @@ const LayoutSider: FC = () => {
   return (
     <Menu
       style={{
-        background:
-          Theme === "light" ? themeToken.lightTheme : themeToken.darkTheme,
-        color:
-          Theme === "light"
-            ? themeToken.colorTextDisabledLight
-            : themeToken.colorTextDisabledDark,
+        background: getThemeColor(
+          Theme,
+          BackGroundColor.light,
+          BackGroundColor.dark,
+        ),
+        color: getThemeColor(Theme, FontColor.light, FontColor.dark),
       }}
-      theme={Theme as MenuTheme}
       defaultSelectedKeys={["1"]}
       mode="inline"
       items={items}

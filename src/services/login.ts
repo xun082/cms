@@ -3,7 +3,7 @@ import { requestFrom } from "@/pages/login/interface";
 
 export function login(params: requestFrom): Promise<ResDataType> {
   return instance({
-    url: "/auth/login",
+    url: "/api/auth/login",
     method: "post",
     headers: {
       "Content-Type": "application/json",
