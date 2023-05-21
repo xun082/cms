@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Layout } from "antd";
 import LayoutHeader from "./components/header";
 import Sider from "antd/es/layout/Sider";
@@ -7,10 +7,19 @@ import LayoutSider from "./components/sider";
 import { useAppSelector } from "@/store";
 import { Outlet } from "react-router";
 import { useProThemeContext } from "@/hooks/theme";
+import { useNavigate } from "react-router-dom";
+import { hasToken } from "@/utils/storage";
+import { routerEnum } from "@/enum/router";
 
 const Layouts: FC = () => {
   const { isCollapsed } = useAppSelector(state => state.home);
   const { Theme } = useProThemeContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!hasToken()) navigate(routerEnum.LOGIN_ROUTER, { replace: true });
+  }, []);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <LayoutHeader />

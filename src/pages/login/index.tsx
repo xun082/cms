@@ -1,23 +1,41 @@
-import React, { FC, useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import React, { FC, useState, useEffect } from "react";
+import { Form, Input, Button, Checkbox, App } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
 import { requestFrom } from "./interface";
-import { loginAction } from "@/store/modules/login";
-import { useAppDispatch } from "@/store";
+import { useNavigate } from "react-router-dom";
+import { routerEnum } from "@/enum/router";
+import { login } from "@/services/login";
+import {
+  setLocalStorage,
+  TOKEN_KEY,
+  PERMISSIONS_KEY,
+  hasToken,
+} from "@/utils/storage";
 
-const Login: FC = () => {
-  const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
+const Logins: FC = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { message } = App.useApp();
+
+  useEffect(() => {
+    if (hasToken()) navigate(routerEnum.HOME_ROUTER, { replace: true });
+  }, []);
+
   const onFinish = async (values: requestFrom) => {
     try {
       setLoading(true);
-      await dispatch(loginAction(values));
-      navigate("/");
+      const res = await login(values);
+      setLocalStorage(TOKEN_KEY, {
+        assess_token: res.token,
+      });
+      setLocalStorage(PERMISSIONS_KEY, res.permissions);
+      setTimeout(() => {
+        navigate(routerEnum.HOME_ROUTER);
+      }, 1000);
     } catch (error: any) {
       console.log(error);
+      message.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -80,5 +98,11 @@ const Login: FC = () => {
     </div>
   );
 };
+
+const Login: FC = () => (
+  <App>
+    <Logins />
+  </App>
+);
 
 export default Login;

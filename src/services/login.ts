@@ -1,13 +1,10 @@
-import instance, { ResDataType } from "./config";
+import instance from "@/utils/http";
 import { requestFrom } from "@/pages/login/interface";
 
-export function login(params: requestFrom): Promise<ResDataType> {
-  return instance({
-    url: "/api/auth/login",
+export function login(params: requestFrom) {
+  return instance.request({
+    url: "/login",
     method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: JSON.stringify(params),
+    data: params,
   });
 }
