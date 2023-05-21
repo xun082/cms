@@ -65,8 +65,8 @@ export function isString(val: unknown): val is string {
   return is(val, "String");
 }
 
-export function isFunction(val: unknown): val is Function {
-  return typeof val === "function";
+export function isFunction<T = Function>(val: unknown): val is T {
+  return is(val, "Function");
 }
 
 export function isBoolean(val: unknown): val is boolean {

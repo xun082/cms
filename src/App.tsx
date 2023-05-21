@@ -2,11 +2,12 @@ import React, { Suspense } from "react";
 import { theme } from "antd";
 import "@/assets/styles/reset.css";
 import "antd/dist/reset.css";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 import { Spin } from "antd";
-import RouterConfig from "./router";
+import AuthRouter from "./router/authRouter";
+import Router from "./router";
 
 const App = () => {
   const {
@@ -22,7 +23,7 @@ const App = () => {
         color: colorTextHeading,
       }}
     >
-      <BrowserRouter>
+      <HashRouter>
         <Suspense
           fallback={
             <Spin
@@ -36,9 +37,11 @@ const App = () => {
             />
           }
         >
-          <RouterConfig />
+          <AuthRouter>
+            <Router />
+          </AuthRouter>
         </Suspense>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 };

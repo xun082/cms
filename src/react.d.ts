@@ -28,3 +28,4 @@ declare module "*.jpeg";
 declare module "*.svg";
 declare module "@ant-design/icons";
 declare module "screenfull";
+declare module "*";

@@ -34,10 +34,12 @@ export function OptimizedData(config: RequestConfig) {
 }
 
 export function RequestBefore(req: InternalAxiosRequestConfig) {
-  const token = getLocalStorageInfo(TOKEN_KEY);
-  if (!token) {
-    req.headers.token = token;
+  const { assess_token } = getLocalStorageInfo(TOKEN_KEY);
+
+  if (assess_token) {
+    req.headers.Authorization = assess_token;
   }
+
   return req;
 }
 

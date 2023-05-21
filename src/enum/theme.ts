@@ -1,5 +1,5 @@
 export const BackGroundColor = {
-  dark: "#2a2c2c",
+  dark: "#1f1f1f",
   light: "#fff",
 };
 
