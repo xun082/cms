@@ -5,6 +5,7 @@ import { rootRouter } from ".";
 import { routerEnum } from "@/enum/router";
 import { hasToken } from "@/utils/storage";
 const axiosCanceler = new AxiosCanceler();
+import { useEffect } from "react";
 
 /**
  * @description 路由守卫组件
@@ -12,15 +13,19 @@ const axiosCanceler = new AxiosCanceler();
 const AuthRouter = (props: any) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  // * 判断是否有Token
+  useEffect(() => {
+    if (!hasToken()) {
+      navigate(routerEnum.LOGIN_ROUTER);
+    }
+  }, [pathname]);
   const route = searchRoute(pathname, rootRouter);
 
   // * 在跳转路由之前，清除所有的请求
   axiosCanceler.removeAllPending();
   // * 判断当前路由是否需要访问权限(不需要权限直接放行)
   if (!route.meta?.requiresAuth) return props.children;
-
-  // * 判断是否有Token
-  if (!hasToken()) navigate(routerEnum.LOGIN_ROUTER);
 
   // * Dynamic Router(动态路由，根据后端返回的菜单数据生成的一维数组)
   //   const dynamicRouter = store.getState().auth.authRouter;

@@ -27,8 +27,8 @@ export const getThemeInfo = () => {
 /**
  * 删除本地缓存中的 Token 信息
  */
-export const removeTokenInfo = () => {
-  localStorage.removeItem(TOKEN_KEY);
+export const removeLocalStorage = (key: string) => {
+  localStorage.removeItem(key);
 };
 
 /**

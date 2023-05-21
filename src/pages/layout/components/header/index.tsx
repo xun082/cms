@@ -12,7 +12,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { setThemeInfo } from "@/utils/storage";
+import { setThemeInfo, removeLocalStorage, TOKEN_KEY } from "@/utils/storage";
 import screenfull from "screenfull";
 import { useAppDispatch } from "@/store";
 import { CollapsedAction } from "@/store/modules/home";
@@ -20,6 +20,8 @@ import { useAppSelector } from "@/store";
 import avatar from "@/assets/images/avatar.png";
 import { getThemeColor } from "@/utils";
 import { BackGroundColor } from "@/enum/theme";
+import { useNavigate } from "react-router-dom";
+import { routerEnum } from "@/enum/router";
 
 const LayoutHeader: FC = () => {
   const { isCollapsed } = useAppSelector(state => state.home);
@@ -28,6 +30,7 @@ const LayoutHeader: FC = () => {
   const [fullScreen, setFullScreen] = useState<boolean>(
     screenfull.isFullscreen,
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
     screenfull.on("change", () => {
@@ -70,7 +73,8 @@ const LayoutHeader: FC = () => {
 
   const onClick = ({ key }: { key: string }) => {
     if (key === "2") {
-      console.log(1111);
+      removeLocalStorage(TOKEN_KEY);
+      navigate(routerEnum.LOGIN_ROUTER);
     }
   };
 

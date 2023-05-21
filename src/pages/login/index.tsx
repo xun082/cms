@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, App } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { requestFrom } from "./interface";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { routerEnum } from "@/enum/router";
 import { login } from "@/services/login";
 import {
@@ -15,12 +15,14 @@ import {
 
 const Logins: FC = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
+
   const { message } = App.useApp();
 
   useEffect(() => {
-    if (hasToken()) navigate(routerEnum.HOME_ROUTER, { replace: true });
-  }, []);
+    if (hasToken()) navigate(routerEnum.HOME_ROUTER);
+  }, [pathname]);
 
   const onFinish = async (values: requestFrom) => {
     try {
@@ -30,6 +32,7 @@ const Logins: FC = () => {
         assess_token: res.token,
       });
       setLocalStorage(PERMISSIONS_KEY, res.permissions);
+      message.success("登录成功");
       setTimeout(() => {
         navigate(routerEnum.HOME_ROUTER);
       }, 1000);
