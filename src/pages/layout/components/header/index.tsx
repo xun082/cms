@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from "react";
 import { Layout, Dropdown, Badge, MenuProps, Button } from "antd";
 import { useProThemeContext } from "@/hooks/theme";
 import styles from "./index.module.scss";
-import logo from "@/assets/images/logo192.png";
 import {
   SkinOutlined,
   FullscreenOutlined,
@@ -90,20 +89,16 @@ const LayoutHeader: FC = () => {
       }}
     >
       <div className={styles["left"]}>
-        <div className={styles["logo"]}>
-          <img src={logo} alt="logo" className={styles["logo-img"]} />
-          <h2 className={styles["logo-text"]}>Moment Admin</h2>
-          <Button
-            type="text"
-            icon={isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => dispatch(CollapsedAction())}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
-          />
-        </div>
+        <Button
+          type="text"
+          icon={isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={() => dispatch(CollapsedAction(!isCollapsed))}
+          style={{
+            fontSize: "16px",
+            width: 64,
+            height: 64,
+          }}
+        />
       </div>
       <div className={styles["right"]}>
         <Badge className={styles["icon"]} size="small" count={5}>

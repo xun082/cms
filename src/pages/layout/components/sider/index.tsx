@@ -7,13 +7,16 @@ import {
 import { useProThemeContext } from "@/hooks/theme";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
+import { useAppSelector } from "@/store";
 import { getThemeColor } from "@/utils";
 import { BackGroundColor, FontColor } from "@/enum/theme";
-import "./index.scss";
+import styles from "./index.module.scss";
+import logo from "@/assets/images/logo192.png";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const LayoutSider: FC = () => {
+  const { isCollapsed } = useAppSelector(state => state.home);
   const { Theme } = useProThemeContext();
   function getItem(
     label: React.ReactNode,
@@ -37,8 +40,10 @@ const LayoutSider: FC = () => {
       getItem("Alex", "5"),
     ]),
   ];
+
   return (
-    <Menu
+    <div
+      className={styles.root}
       style={{
         background: getThemeColor(
           Theme,
@@ -47,10 +52,28 @@ const LayoutSider: FC = () => {
         ),
         color: getThemeColor(Theme, FontColor.light, FontColor.dark),
       }}
-      defaultSelectedKeys={["1"]}
-      mode="inline"
-      items={items}
-    />
+    >
+      <div className={styles.logo}>
+        <img src={logo} className={styles["logo-img"]} alt="" />
+        {!isCollapsed ? (
+          <h2 className={styles["logo-text"]}>Moment Admin </h2>
+        ) : null}
+      </div>
+      <Menu
+        style={{
+          background: getThemeColor(
+            Theme,
+            BackGroundColor.light,
+            BackGroundColor.dark,
+          ),
+          height: "calc(100vh-58px)",
+          color: getThemeColor(Theme, FontColor.light, FontColor.dark),
+        }}
+        defaultSelectedKeys={["1"]}
+        mode="inline"
+        items={items}
+      />
+    </div>
   );
 };
 

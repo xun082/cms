@@ -12,8 +12,10 @@ const homeSlice = createSlice({
   name: "home",
   initialState,
   reducers: {
-    CollapsedAction(state): void {
-      state.isCollapsed = !state.isCollapsed;
+    CollapsedAction(state, action): void {
+      const { payload } = action;
+
+      state.isCollapsed = payload;
     },
   },
   extraReducers: () => {},
